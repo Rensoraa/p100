@@ -45,15 +45,38 @@ p {
   flex-grow: 1;
 }
 
-.gallery img {
+/* Wrap each screenshot */
+.screenshot {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Image styling (moved here from .gallery img) */
+.screenshot img {
   width: 100%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
   transition: transform 0.2s ease;
 }
 
-.gallery img:hover {
+.screenshot img:hover {
   transform: scale(1.03);
+}
+
+/* Caption overlay */
+.screenshot .caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  text-align: left;
+  box-sizing: border-box;
+  border-radius: 0 0 10px 10px;
 }
 
 footer {
