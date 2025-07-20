@@ -19,12 +19,13 @@ header {
 }
 
 .banner {
-  max-width: 90%;
+  max-width: 70%;
   height: auto;
   margin-bottom: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 20px #ff0000a0;
 }
+
 
 h1 {
   font-size: 2.5rem;
