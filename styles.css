@@ -19,12 +19,14 @@ header {
 }
 
 .banner {
-  width: 70%;
-  height: auto;
-  margin-bottom: 1rem;
+  display: block;
+  width: 50% !important;     /* Force override */
+  height: auto !important;   /* Ensure height scales */
+  margin: 0 auto 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 20px #ff0000a0;
 }
+
 
 
 h1 {
