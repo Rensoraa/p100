@@ -14,21 +14,56 @@
     <p>Celebrating the grind. Every Prestige, every cake.</p>
   </header>
 
-<main class="gallery">
-  <div class="screenshot">
-    <img src="assets/Nea.jpg" alt="P100 Nea" />
-  </div>
-  <div class="screenshot">
-    <img src="assets/Sable.jpg" alt="P100 Sable" />
-  </div>
-  <div class="screenshot">
-    <img src="assets/Phead.jpg" alt="Next P100 Phead" />
-  </div>
-</main>
+  <main class="gallery-section">
 
+    <h2>Survivor P100s</h2>
+    <div class="gallery">
+      <div class="screenshot">
+        <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="P100 Nea" />
+      </div>
+      <div class="screenshot">
+        <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="P100 Sable" />
+      </div>
+    </div>
+
+    <h2>Killer P100s</h2>
+    <div class="gallery">
+      <div class="screenshot">
+        <img src="assets/p100-screenshots/Killer/Phead.jpg" alt="Next P100 Phead" />
+      </div>
+    </div>
+
+  </main>
 
   <footer>
     <p>Made with ❤️ by Rensora • Last updated: 07/22/2025 [06:46 PM]</p>
   </footer>
+
+  <script>
+    document.querySelectorAll('.screenshot').forEach(div => {
+      div.addEventListener('click', () => {
+        div.classList.toggle('clicked');
+      });
+    });
+  </script>
+  <div class="lightbox" id="lightbox">
+  <img src="" alt="Popup Image" id="lightbox-img" />
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  document.querySelectorAll('.screenshot img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+</script>
 </body>
 </html>
