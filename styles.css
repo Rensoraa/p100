@@ -20,8 +20,8 @@ header {
 
 .banner {
   display: block;
-  width: 50% !important;     /* Force override */
-  height: auto !important;   /* Ensure height scales */
+  width: 50% !important;
+  height: auto !important;
   margin: 0 auto 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 20px #ff0000a0;
@@ -48,14 +48,12 @@ p {
   flex-grow: 1;
 }
 
-/* Wrap each screenshot */
 .screenshot {
   position: relative;
   display: inline-block;
   overflow: hidden;
 }
 
-/* Image styling (moved here from .gallery img) */
 .screenshot img {
   width: 100%;
   border-radius: 10px;
@@ -74,7 +72,6 @@ footer {
   color: #777;
 }
 
-/* Lightbox overlay */
 .lightbox {
   position: fixed;
   top: 0;
@@ -103,3 +100,31 @@ footer {
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
   transition: transform 0.3s ease;
 }
+.steam-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #b00020;
+  color: #fff;
+  padding: 8px 14px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  transition: background 0.2s ease;
+  z-index: 10;
+}
+
+.steam-button:hover {
+  background-color: #ff4444;
+}
+
+
+.steam-icon {
+  width: 20px;
+  height: 20px;
+}
+
