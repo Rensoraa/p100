@@ -27,8 +27,6 @@ header {
   box-shadow: 0 0 20px #ff0000a0;
 }
 
-
-
 h1 {
   font-size: 2.5rem;
   margin-bottom: 0.3rem;
@@ -93,13 +91,43 @@ footer {
   opacity: 1;
 }
 
-.lightbox img {
+.lightbox-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
   max-width: 90%;
   max-height: 90%;
+  flex-wrap: wrap;
+}
+
+.lightbox img {
+  max-width: 60%;
+  max-height: 80%;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-  transition: transform 0.3s ease;
 }
+
+.lightbox-info {
+  max-width: 30%;
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  color: #eee;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+  text-align: left;
+}
+
+.lightbox-info h3 {
+  margin-bottom: 0.5rem;
+  color: #ff4444;
+}
+
+.lightbox-info p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
 .steam-button {
   position: absolute;
   top: 20px;
@@ -122,9 +150,20 @@ footer {
   background-color: #ff4444;
 }
 
+.p100-counter {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background-color: #222;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  z-index: 9;
+}
 
 .steam-icon {
   width: 20px;
   height: 20px;
 }
-

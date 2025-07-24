@@ -30,60 +30,86 @@
 </head>
 
 <body>
-  <header>
-    <img src="assets/Banner.png" alt="Banner" />
-    <h1>P100 Showcase</h1>
-    <p><a href="https://steamcommunity.com/id/rensora/" target="_blank" class="steam-button">
-  <img src="https://cdn-icons-png.flaticon.com/512/3670/3670382.png" alt="My Steam Page" class="steam-icon" />
-  My Steam Page
-</a>
+<header>
+  <img src="assets/Banner.png" alt="Banner" />
+  <h1>P100 Showcase</h1>
 
-   All of Rensora’s P100s, showcased in one place.</p>
-  </header>
+  <a href="https://steamcommunity.com/id/rensora/" target="_blank" class="steam-button">
+    <img src="https://cdn-icons-png.flaticon.com/512/3670/3670382.png" alt="My Steam Page" class="steam-icon" />
+    My Steam Page
+  </a>
 
-  <main class="gallery-section">
+  <div class="p100-counter">
+    Total P100s: <span id="p100-count">2</span>
+  </div>
 
-    <h2>Survivor P100s</h2>
-    <div class="gallery">
-      <div class="screenshot">
-        <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="P100 Nea" />
-      </div>
-      <div class="screenshot">
-        <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="P100 Sable" />
-      </div>
+  <p>All of Rensora’s P100s, showcased in one place.</p>
+</header>
+
+<main class="gallery-section">
+
+  <h2>Survivor P100s</h2>
+  <div class="gallery">
+    <div class="screenshot">
+      <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="P100 Nea" title="Unlocked on 27 Mar 2025" />
     </div>
-
-    <h2>Killer P100s</h2>
-    <div class="gallery">
-      <div class="screenshot">
-        <img src="assets/p100-screenshots/Killer/Phead.jpg" alt="Next P100 Phead" />
-      </div>
+    <div class="screenshot">
+      <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="P100 Sable" title="Unlocked on 22 Jul 2025" />
     </div>
+  </div>
 
-  </main>
+  <h2>Killer P100s</h2>
+  <div class="gallery">
+    <div class="screenshot">
+      <img src="assets/p100-screenshots/Killer/Phead.jpg" alt="Next P100 Phead" title="Next character P100" />
+    </div>
+  </div>
 
-  <footer>
-    <p>Made with ❤️ by Rensora • Last updated: 07/22/2025 [06:46 PM]</p>
-  </footer>
+</main>
 
-  <script>
-    document.querySelectorAll('.screenshot').forEach(div => {
-      div.addEventListener('click', () => {
-        div.classList.toggle('clicked');
-      });
-    });
-  </script>
-  <div class="lightbox" id="lightbox">
-  <img src="" alt="Popup Image" id="lightbox-img" />
+<footer>
+  <p>Made with ❤️ by Rensora • Last updated: 07/22/2025 [06:46 PM]</p>
+</footer>
+
+<!-- Lightbox HTML -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <img src="" alt="Popup Image" id="lightbox-img" />
+    <div class="lightbox-info" id="lightbox-info">
+  <h3 id="lightbox-title">P100 Title</h3>
+  <p id="lightbox-desc">Additional info about this P100.</p>
+</div>
+  </div>
 </div>
 
 <script>
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+
+  const infoMap = {
+    'P100 Nea': {
+      title: 'Nea Karlsson',
+      desc: 'Unlocked on 27 Mar 2025 • My first P100'
+    },
+    'P100 Sable': {
+      title: 'Sable Ward',
+      desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor'
+    },
+    'Next P100 Phead': {
+      title: 'Pyramid Head',
+      desc: 'Next target for P100 • Stay tuned...'
+    }
+  };
 
   document.querySelectorAll('.screenshot img').forEach(img => {
     img.addEventListener('click', () => {
+      const alt = img.alt;
+      const info = infoMap[alt] || { title: alt, desc: 'No extra info available.'};
       lightboxImg.src = img.src;
+      lightboxTitle.textContent = info.title;
+      lightboxDesc.textContent = info.desc;
       lightbox.classList.add('active');
     });
   });
