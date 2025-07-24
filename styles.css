@@ -102,7 +102,7 @@ footer {
 }
 
 .lightbox img {
-  max-width: 60%;
+  max-width: 75%;
   max-height: 80%;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
