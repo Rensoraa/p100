@@ -68,7 +68,7 @@
 </main>
 
 <footer>
-  <p>Made with ❤️ by Rensora • Last updated: 07/22/2025 [06:46 PM]</p>
+  <p>Made with ❤️ by Rensora • Last updated: 07/24/2025 [04:26 AM]</p>
 </footer>
 
 <!-- Lightbox HTML -->
@@ -78,6 +78,7 @@
     <div class="lightbox-info" id="lightbox-info">
   <h3 id="lightbox-title">P100 Title</h3>
   <p id="lightbox-desc">Additional info about this P100.</p>
+  <p id="lightbox-extra">Extra info about this P100.</p>
 </div>
   </div>
 </div>
@@ -87,6 +88,7 @@
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxTitle = document.getElementById('lightbox-title');
   const lightboxDesc = document.getElementById('lightbox-desc');
+  const lightboxExtra = document.getElementById('lightbox-extra');
 
   const infoMap = {
     'P100 Nea': {
@@ -99,7 +101,8 @@
     },
     'Next P100 Phead': {
       title: 'Pyramid Head',
-      desc: 'Next target for P100 • Stay tuned...'
+      desc: 'Next target for P100 • Stay tuned...',
+      extra: 'Pyramid Head is P30 As of last edit.'
     }
   };
 
@@ -110,6 +113,7 @@
       lightboxImg.src = img.src;
       lightboxTitle.textContent = info.title;
       lightboxDesc.textContent = info.desc;
+      lightboxExtra.textContent = info.extra;
       lightbox.classList.add('active');
     });
   });
