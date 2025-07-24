@@ -146,6 +146,12 @@ footer {
   z-index: 10;
 }
 
+.highlight {
+  color: #e74c3c;
+  font-weight: bold;
+  font-style: italic;
+}
+
 .steam-button:hover {
   background-color: #ff4444;
 }

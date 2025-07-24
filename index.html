@@ -44,6 +44,7 @@
   </div>
 
   <p>All of Rensora’s P100s, showcased in one place.</p>
+ 
 </header>
 
 <main class="gallery-section">
@@ -77,6 +78,7 @@
     <img src="" alt="Popup Image" id="lightbox-img" />
     <div class="lightbox-info" id="lightbox-info">
   <h3 id="lightbox-title">P100 Title</h3>
+  <p id="lightbox-cost"><span class="highlight">Amount Spend:</span></p>
   <p id="lightbox-desc">Additional info about this P100.</p>
   <p id="lightbox-extra">Extra info about this P100.</p>
 </div>
@@ -89,20 +91,24 @@
   const lightboxTitle = document.getElementById('lightbox-title');
   const lightboxDesc = document.getElementById('lightbox-desc');
   const lightboxExtra = document.getElementById('lightbox-extra');
+  const lightboxCost = document.getElementById('lightbox-cost');
 
   const infoMap = {
     'P100 Nea': {
       title: 'Nea Karlsson',
-      desc: 'Unlocked on 27 Mar 2025 • My first P100'
+      desc: 'Unlocked on 27 Mar 2025 • My first P100',
+      cost: '~ 119 Million Bloodpoints'
     },
     'P100 Sable': {
       title: 'Sable Ward',
-      desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor'
+      desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor',
+      cost: '~ 121 Million Bloodpoints'
     },
     'Next P100 Phead': {
       title: 'Pyramid Head',
       desc: 'Next target for P100 • Stay tuned...',
-      extra: 'Pyramid Head is P31 As of last edit...'
+      extra: 'Pyramid Head is P31 As of last edit...',
+      cost: 'Not yet completed'
     }
   };
 
@@ -114,6 +120,7 @@
       lightboxTitle.textContent = info.title;
       lightboxDesc.textContent = info.desc;
       lightboxExtra.textContent = info.extra;
+      lightboxCost.innerHTML = `<span class="highlight">Amount Spend:</span> ${info.cost}`;
       lightbox.classList.add('active');
     });
   });
