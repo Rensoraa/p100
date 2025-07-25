@@ -169,6 +169,19 @@ footer {
   z-index: 9;
 }
 
+.inprogress-counter {
+  position: absolute;
+  top: 119px;
+  right: 20px;
+  background-color: #222;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  z-index: 9;
+}
+
 .steam-icon {
   width: 20px;
   height: 20px;
