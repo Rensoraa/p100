@@ -186,3 +186,19 @@ footer {
   width: 20px;
   height: 20px;
 }
+
+#killer-section .gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#killer-section .screenshot {
+  text-align: center;
+}
+
+#killer-section img {
+  max-width: 700px;
+  width: 100%;
+  height: auto;
+}
