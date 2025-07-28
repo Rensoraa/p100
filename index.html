@@ -49,6 +49,10 @@
   <p>All of Rensora’s P100s, showcased in one place.</p>
  
 </header>
+<div class="search-container">
+  <input type="text" id="search-input" placeholder="Search P100..." />
+  <ul id="search-results"></ul>
+</div>
 
 <main class="gallery-section">
 
@@ -155,6 +159,58 @@
   lightbox.addEventListener('click', () => {
     lightbox.classList.remove('active');
   });
+
+  const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+
+const nameMap = {
+  "Nea Karlsson": "P100 Nea",
+  "Sable Ward": "P100 Sable",
+  "Pyramid Head": "Pyramid Head",
+  "Xenomorph": "Xenomorph"
+};
+
+const imgMap = {};
+document.querySelectorAll('.screenshot img').forEach(img => {
+  imgMap[img.alt.toLowerCase()] = img;
+});
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  searchResults.innerHTML = '';
+  if (!query) {
+    searchResults.style.display = 'none';
+    return;
+  }
+
+  const matches = Object.entries(nameMap).filter(([displayName, _alt]) =>
+    displayName.toLowerCase().includes(query)
+  );
+
+  if (matches.length > 0) {
+    matches.forEach(([displayName, altText]) => {
+      const li = document.createElement('li');
+      li.textContent = displayName;
+      li.addEventListener('click', () => {
+        const img = imgMap[altText.toLowerCase()];
+        if (img) img.click(); 
+        searchResults.style.display = 'none';
+        searchInput.value = '';
+      });
+      searchResults.appendChild(li);
+    });
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.style.display = 'none';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-container')) {
+    searchResults.style.display = 'none';
+  }
+});
+
 </script>
 </body>
 </html>
