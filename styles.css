@@ -270,3 +270,15 @@ footer {
   color: #111;
   box-shadow: 0 0 20px #ff0000dd;
 }
+.footer-link {
+  color: #ff4444;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  color: #cc0000;
+  text-decoration: underline;
+}
