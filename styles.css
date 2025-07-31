@@ -32,6 +32,12 @@ h1 {
   margin-bottom: 0.3rem;
   color: #ff4444;
 }
+h4{
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #ff4444;
+  text-align: center;
+}
 
 p {
   font-size: 1rem;
@@ -280,5 +286,9 @@ footer {
 .footer-link:hover,
 .footer-link:focus {
   color: #cc0000;
-  text-decoration: underline;
+  text-decoration: none;
+}
+a {
+  color: inherit;         /* Uses the parent's text color */
+  text-decoration: none;  /* Removes underline */
 }
