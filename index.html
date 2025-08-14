@@ -31,7 +31,7 @@
 
 <body>
 <header>
-  <img src="assets/Banner.png" alt="Banner" />
+  <img src="assets/Banner.png" alt="Banner" class="banner" />
   <h1>P100 Showcase</h1>
 
   <a href="https://steamcommunity.com/id/rensora/" target="_blank" class="steam-button">
@@ -47,15 +47,29 @@
     In progress: <span id="inprogress-count">2</span>
   </div>
   <p>All of Rensora’s P100s, showcased in one place.</p>
- 
 </header>
+
+<!-- Discord button with dot and status text -->
+<div id="discord-button" class="discord-button">
+  <span id="discord-status-dot"></span>
+  <span id="discord-status-text"></span>
+</div>
+
+<!-- Discord activity box (glassy, DBD info) -->
+<div id="discord-activity" class="discord-activity">
+  <img id="dbd-image" src="https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png" alt="Game Art">
+  <div class="dbd-info">
+    <span id="dbd-title">🎮 Playing Dead by Daylight</span>
+    <span id="dbd-timer"></span>
+  </div>
+</div>
+
 <div class="search-container">
   <input type="text" id="search-input" placeholder="Search P100..." />
   <ul id="search-results"></ul>
 </div>
 
 <main class="gallery-section">
-
   <h2>Survivor P100s</h2>
   <div class="gallery">
     <div class="screenshot">
@@ -73,7 +87,6 @@
         <img src="assets/p100-screenshots/Killer/Nothing.jpg" alt="Nope nothing here" title="Nothing here" />
       </div>
     </div>
-  </div>
   </section>
 
   <h2>In-Progress</h2>
@@ -88,15 +101,17 @@
     <div class="screenshot">
       <img src="assets/p100-screenshots/In-Progress/xeno.jpg" alt="Xenomorph" title="Next character(s) P100" />
     </div>
+  </div>
 </main>
+
 <footer>
   <p>Made with ❤️ by Rensora • Last updated: 07/29/2025 [05:48 AM]</p>
 
   <div class="subsite-link">
     <a href="https://rensoraa.github.io/socials/" title="Visit my Socials page">🔗 Visit My Socials</a>
-  <p style="margin-top: 1rem;">
-    <a href="https://rensoraa.github.io/goals/" class="footer-link">🎯 View Character P100 Goals</a>
-  </p>
+    <p style="margin-top: 1rem;">
+      <a href="https://rensoraa.github.io/goals/" class="footer-link">🎯 View Character P100 Goals</a>
+    </p>
   </div>
 </footer>
 
@@ -104,11 +119,11 @@
   <div class="lightbox-content">
     <img src="" alt="Popup Image" id="lightbox-img" />
     <div class="lightbox-info" id="lightbox-info">
-  <h3 id="lightbox-title">P100 Title</h3>
-  <p id="lightbox-cost"><span class="highlight">Amount Spend:</span></p>
-  <p id="lightbox-desc">Additional info about this P100.</p>
-  <p id="lightbox-extra">Extra info about this P100.</p>
-</div>
+      <h3 id="lightbox-title">P100 Title</h3>
+      <p id="lightbox-cost"><span class="highlight">Amount Spend:</span></p>
+      <p id="lightbox-desc">Additional info about this P100.</p>
+      <p id="lightbox-extra">Extra info about this P100.</p>
+    </div>
   </div>
 </div>
 
@@ -121,40 +136,12 @@
   const lightboxCost = document.getElementById('lightbox-cost');
 
   const infoMap = {
-    'P100 Nea': {
-      title: 'Nea Karlsson',
-      desc: 'Unlocked on 27 Mar 2025 • My first P100',
-      cost: '~ 119 Million Bloodpoints'
-    },
-    'Nope nothing here': {
-      title: 'No p100 killers yet',
-      desc: 'What else do you want to see here?',
-      extra: 'Really, I have no P100 killers yet.',
-      cost: 'Obviously, nothing yet'
-    },
-    'P100 Sable': {
-      title: 'Sable Ward',
-      desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor',
-      cost: '~ 121 Million Bloodpoints'
-    },
-    'Pyramid Head': {
-      title: 'Pyramid Head',
-      desc: 'Next target for P100 • Stay tuned...',
-      extra: 'Pyramid Head is P62 As of last edit...',
-      cost: 'Not yet completed'
-    },
-    'Xenomorph': {
-      title: 'Xenomorph',
-      desc: 'Next target for P100 • Stay tuned...',
-      extra: 'Xenomorph is P4 As of last edit...',
-      cost: 'Not yet completed'
-    },
-    'Legion': {
-      title: 'Legion',
-      desc: 'Next target for P100 • Stay tuned...',
-      extra: 'Legion is P21 As of last edit...',
-      cost: 'Not yet completed'
-    },
+    'P100 Nea': { title: 'Nea Karlsson', desc: 'Unlocked on 27 Mar 2025 • My first P100', cost: '~ 119 Million Bloodpoints' },
+    'Nope nothing here': { title: 'No p100 killers yet', desc: 'What else do you want to see here?', extra: 'Really, I have no P100 killers yet.', cost: 'Obviously, nothing yet' },
+    'P100 Sable': { title: 'Sable Ward', desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor', cost: '~ 121 Million Bloodpoints' },
+    'Pyramid Head': { title: 'Pyramid Head', desc: 'Next target for P100 • Stay tuned...', extra: 'Pyramid Head is P62 As of last edit...', cost: 'Not yet completed' },
+    'Xenomorph': { title: 'Xenomorph', desc: 'Next target for P100 • Stay tuned...', extra: 'Xenomorph is P4 As of last edit...', cost: 'Not yet completed' },
+    'Legion': { title: 'Legion', desc: 'Next target for P100 • Stay tuned...', extra: 'Legion is P21 As of last edit...', cost: 'Not yet completed' },
   };
 
   document.querySelectorAll('.screenshot img').forEach(img => {
@@ -175,57 +162,82 @@
   });
 
   const searchInput = document.getElementById('search-input');
-const searchResults = document.getElementById('search-results');
+  const searchResults = document.getElementById('search-results');
 
-const nameMap = {
-  "Nea Karlsson": "P100 Nea",
-  "Sable Ward": "P100 Sable",
-  "Pyramid Head": "Pyramid Head",
-  "Xenomorph": "Xenomorph",
-  "Legion": "Legion",
-};
+  const nameMap = {
+    "Nea Karlsson": "P100 Nea",
+    "Sable Ward": "P100 Sable",
+    "Pyramid Head": "Pyramid Head",
+    "Xenomorph": "Xenomorph",
+    "Legion": "Legion",
+  };
 
-const imgMap = {};
-document.querySelectorAll('.screenshot img').forEach(img => {
-  imgMap[img.alt.toLowerCase()] = img;
-});
+  const imgMap = {};
+  document.querySelectorAll('.screenshot img').forEach(img => {
+    imgMap[img.alt.toLowerCase()] = img;
+  });
 
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-  searchResults.innerHTML = '';
-  if (!query) {
-    searchResults.style.display = 'none';
-    return;
-  }
-
-  const matches = Object.entries(nameMap).filter(([displayName, _alt]) =>
-    displayName.toLowerCase().includes(query)
-  );
-
-  if (matches.length > 0) {
-    matches.forEach(([displayName, altText]) => {
-      const li = document.createElement('li');
-      li.textContent = displayName;
-      li.addEventListener('click', () => {
-        const img = imgMap[altText.toLowerCase()];
-        if (img) img.click(); 
-        searchResults.style.display = 'none';
-        searchInput.value = '';
-      });
-      searchResults.appendChild(li);
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    searchResults.innerHTML = '';
+    if(query.length === 0) { searchResults.style.display='none'; return;}
+    Object.keys(imgMap).forEach(key => {
+      if(key.includes(query)){
+        const li = document.createElement('li');
+        li.textContent = key;
+        li.addEventListener('click', () => imgMap[key].click());
+        searchResults.appendChild(li);
+      }
     });
-    searchResults.style.display = 'block';
-  } else {
-    searchResults.style.display = 'none';
-  }
-});
+    searchResults.style.display = searchResults.children.length ? 'block' : 'none';
+  });
 
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search-container')) {
-    searchResults.style.display = 'none';
-  }
-});
+  // Discord status update
+  function updateDiscordStatus() {
+    fetch("https://api.lanyard.rest/v1/users/929521121475313804")
+      .then(res => res.json())
+      .then(data => {
+        if(!data.success) return;
+        const dot = document.getElementById("discord-status-dot");
+        const statusText = document.getElementById("discord-status-text");
+        const status = data.data.discord_status;
+        const activities = data.data.activities;
+        if(status==="online"){ dot.className="status-online"; statusText.textContent="Online"; }
+        else if(status==="idle"){ dot.className="status-idle"; statusText.textContent="Idle"; }
+        else if(status==="dnd"){ dot.className="status-dnd"; statusText.textContent="Do Not Disturb"; }
+        else{ dot.className="status-offline"; statusText.textContent="Offline"; }
 
+        const activityBox = document.getElementById("discord-activity");
+        const dbd = activities.find(a=>a.name && a.name.toLowerCase()==="dead by daylight");
+        if(dbd){
+          document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
+          document.getElementById("dbd-title").textContent = "Playing Dead by Daylight";
+          const startTime = dbd.timestamps?.start;
+          if(startTime){
+            const updateTimer = ()=>{
+              const elapsed = Date.now()-startTime;
+              const hours = Math.floor(elapsed/3600000);
+              const minutes = Math.floor((elapsed%3600000)/60000);
+              const seconds = Math.floor((elapsed%60000)/1000);
+              document.getElementById("dbd-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
+            };
+            updateTimer();
+            setInterval(updateTimer,1000);
+          }
+          activityBox.style.display='flex';
+        } else activityBox.style.display='none';
+      }).catch(()=>{
+        const dot = document.getElementById("discord-status-dot");
+        const statusText = document.getElementById("discord-status-text");
+        const activityBox = document.getElementById("discord-activity");
+        dot.className="status-offline";
+        statusText.textContent="Offline";
+        activityBox.style.display='none';
+      });
+  }
+
+  updateDiscordStatus();
+  setInterval(updateDiscordStatus,15000);
 </script>
 </body>
 </html>
