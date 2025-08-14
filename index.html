@@ -44,7 +44,7 @@
   </div>
 
   <div class="inprogress-counter">
-    In progress: <span id="inprogress-count">2</span>
+    In progress: <span id="inprogress-count">4</span>
   </div>
   <p>All of Rensora’s P100s, showcased in one place.</p>
 </header>
@@ -59,7 +59,7 @@
 <div id="discord-activity" class="discord-activity">
   <img id="dbd-image" src="https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png" alt="Game Art">
   <div class="dbd-info">
-    <span id="dbd-title">🎮 Playing Dead by Daylight</span>
+    <span id="dbd-title">Playing Dead by Daylight</span>
     <span id="dbd-timer"></span>
   </div>
 </div>
@@ -192,52 +192,78 @@
     searchResults.style.display = searchResults.children.length ? 'block' : 'none';
   });
 
-  // Discord status update
-  function updateDiscordStatus() {
-    fetch("https://api.lanyard.rest/v1/users/929521121475313804")
-      .then(res => res.json())
-      .then(data => {
-        if(!data.success) return;
-        const dot = document.getElementById("discord-status-dot");
-        const statusText = document.getElementById("discord-status-text");
-        const status = data.data.discord_status;
-        const activities = data.data.activities;
-        if(status==="online"){ dot.className="status-online"; statusText.textContent="Online"; }
-        else if(status==="idle"){ dot.className="status-idle"; statusText.textContent="Idle"; }
-        else if(status==="dnd"){ dot.className="status-dnd"; statusText.textContent="Do Not Disturb"; }
-        else{ dot.className="status-offline"; statusText.textContent="Offline"; }
+ // Discord status update
+function updateDiscordStatus() {
+  fetch("https://api.lanyard.rest/v1/users/929521121475313804")
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) return;
 
-        const activityBox = document.getElementById("discord-activity");
-        const dbd = activities.find(a=>a.name && a.name.toLowerCase()==="dead by daylight");
-        if(dbd){
-          document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
-          document.getElementById("dbd-title").textContent = "Playing Dead by Daylight";
-          const startTime = dbd.timestamps?.start;
-          if(startTime){
-            const updateTimer = ()=>{
-              const elapsed = Date.now()-startTime;
-              const hours = Math.floor(elapsed/3600000);
-              const minutes = Math.floor((elapsed%3600000)/60000);
-              const seconds = Math.floor((elapsed%60000)/1000);
-              document.getElementById("dbd-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
-            };
-            updateTimer();
-            setInterval(updateTimer,1000);
-          }
-          activityBox.style.display='flex';
-        } else activityBox.style.display='none';
-      }).catch(()=>{
-        const dot = document.getElementById("discord-status-dot");
-        const statusText = document.getElementById("discord-status-text");
-        const activityBox = document.getElementById("discord-activity");
-        dot.className="status-offline";
-        statusText.textContent="Offline";
-        activityBox.style.display='none';
-      });
-  }
+      const dot = document.getElementById("discord-status-dot");
+      const statusText = document.getElementById("discord-status-text");
+      const status = data.data.discord_status;
+      const activities = data.data.activities;
 
-  updateDiscordStatus();
-  setInterval(updateDiscordStatus,15000);
+      // Set status dot & text
+      if (status === "online") {
+        dot.className = "status-online";
+        statusText.textContent = "Online";
+      } else if (status === "idle") {
+        dot.className = "status-idle";
+        statusText.textContent = "Idle";
+      } else if (status === "dnd") {
+        dot.className = "status-dnd";
+        statusText.textContent = "Do Not Disturb";
+      } else {
+        dot.className = "status-offline";
+        statusText.textContent = "Offline";
+      }
+
+      const activityBox = document.getElementById("discord-activity");
+      const dbd = activities.find(a => a.name && a.name.toLowerCase() === "dead by daylight");
+
+      if (dbd) {
+        document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
+        document.getElementById("dbd-title").textContent = "Playing Dead by Daylight";
+
+        const startTime = dbd.timestamps?.start;
+        if (startTime) {
+          const updateTimer = () => {
+            const elapsed = Date.now() - startTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            document.getElementById("dbd-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
+          };
+          updateTimer();
+          setInterval(updateTimer, 1000);
+        } else {
+          document.getElementById("dbd-timer").textContent = "";
+        }
+
+        activityBox.style.display = 'flex';
+      } else {
+        // DBD not active
+        document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
+        document.getElementById("dbd-title").textContent = "Not playingDead by Daylight Right now";
+        document.getElementById("dbd-timer").textContent = "";
+        activityBox.style.display = 'flex';
+      }
+    })
+    .catch(() => {
+      const dot = document.getElementById("discord-status-dot");
+      const statusText = document.getElementById("discord-status-text");
+      const activityBox = document.getElementById("discord-activity");
+
+      dot.className = "status-offline";
+      statusText.textContent = "Offline";
+      activityBox.style.display = 'none';
+    });
+}
+
+updateDiscordStatus();
+setInterval(updateDiscordStatus, 15000);
+
 </script>
 </body>
 </html>
