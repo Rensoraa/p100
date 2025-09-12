@@ -121,7 +121,7 @@ footer {
 }
 .steam-button {
     position: absolute;
-    top: 110px;
+    top: 105px;
     right: 20px;
     background-color: var(--purple-main);
     color: #fff;
@@ -155,8 +155,8 @@ footer {
     box-shadow: 0 0 10px rgba(75, 0, 130, 0.4);
     z-index: 9;
 }
-.p100-counter { top: 245px; right: 20px; }
-.inprogress-counter { top: 200px; right: 20px; }
+.p100-counter { top: 225px; right: 20px; }
+.inprogress-counter { top: 190px; right: 20px; }
 
 .steam-icon {
     width: 20px;
@@ -285,7 +285,7 @@ a {
 }
 .discord-button {
     position: absolute;
-    top: 155px;
+    top: 145px;
     right: 20px;
     background-color: var(--purple-main);
     color: #fff;
