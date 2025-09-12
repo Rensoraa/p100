@@ -70,7 +70,6 @@
 </div>
 
 <main class="gallery-section">
-  <!-- <h2>completed P100's</h2> future ref -->
   <div class="gallery">
     <div class="screenshot">
       <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="Nea Karlsson" title="Unlocked on 27 Mar 2025" />
@@ -78,23 +77,16 @@
     <div class="screenshot">
       <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="Sable Ward" title="Unlocked on 22 Jul 2025" />
     </div>
-      <div class="screenshot">
+    <div class="screenshot">
       <img src="assets/p100-screenshots/Survivor/Mika.jpg" alt="Mikaela Reid" title="Unlocked on 6 Sep 2025" />
     </div>
-     <div class="screenshot">
+    <div class="screenshot">
       <img src="assets/p100-screenshots/Killer/P100 Legion.jpg" alt="The Legion" title="Unlocked on 08/18/2025" />
     </div>
   </div>
 
-  <h4>FEATURED Character for the month September: Pyramid Head - Xenomorph</h4>
-  <div class="gallery">
-    <div class="screenshot">
-      <img src="assets/p100-screenshots/In-Progress/phead.jpg" alt="Pyramid Head" title="Next character(s) P100" />
-    </div>
-    <div class="screenshot">
-      <img src="assets/p100-screenshots/In-Progress/xeno.jpg" alt="Xenomorph" title="Next character(s) P100" />
-    </div>
-  </div>
+  <h4 id="featured-title">FEATURED Character for the month</h4>
+  <div class="gallery" id="featured-gallery"></div>
 </main>
 
 <footer>
@@ -121,168 +113,100 @@
 </div>
 
 <script>
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxTitle = document.getElementById('lightbox-title');
-  const lightboxDesc = document.getElementById('lightbox-desc');
-  const lightboxExtra = document.getElementById('lightbox-extra');
-  const lightboxCost = document.getElementById('lightbox-cost');
+  // ===== Discord Status & DBD =====
+  function updateDiscordStatus() {
+    fetch("https://api.lanyard.rest/v1/users/929521121475313804")
+      .then(res => res.json())
+      .then(data => {
+        if (!data.success) return;
 
-  const infoMap = {
-    'Nea Karlsson': 
-    { title: 'Nea Karlsson',
-    desc: 'Unlocked on 27 Mar 2025 • My first P100',
-    cost: '~ 119 Million Bloodpoints'
-   },
-    'Sable Ward': 
-    { title: 'Sable Ward',
-    desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor', 
-    cost: '~ 121 Million Bloodpoints' 
-  },
-    'Pyramid Head':
-    { title: 'Pyramid Head',
-    desc: 'Next target for P100 • Stay tuned...',
-    extra: 'Pyramid Head is P62 As of last edit...', 
-    cost: 'Not yet completed' 
-},
-    'Xenomorph': 
-    { title: 'Xenomorph',
-    desc: 'Next target for P100 • Stay tuned...',
-    extra: 'Xenomorph is P4 As of last edit...',
-    cost: 'Not yet completed'
-  },
-    'The Legion': 
-    { title: 'The Legion',
-    desc: 'Unlocked on 08/18/2025',
-    cost: 'Aprox 125 Million Bloodpoints'
-  },
-   'Mikaela Reid': 
-    { title: 'Mikaela Reid',
-    desc: 'Unlocked on 6 Sep 2025',
-    cost: 'Aprox 130 Million Bloodpoints'
-  }
-};
+        const dot = document.getElementById("discord-status-dot");
+        const statusText = document.getElementById("discord-status-text");
+        const status = data.data.discord_status;
+        const activities = data.data.activities;
 
-  document.querySelectorAll('.screenshot img').forEach(img => {
-    img.addEventListener('click', () => {
-      const alt = img.alt;
-      const info = infoMap[alt] || { title: alt, desc: 'No extra info available.'};
-      lightboxImg.src = img.src;
-      lightboxTitle.textContent = info.title;
-      lightboxDesc.textContent = info.desc;
-      lightboxExtra.textContent = info.extra;
-      lightboxCost.innerHTML = `<span class="highlight">Amount Spend:</span> ${info.cost}`;
-      lightbox.classList.add('active');
-    });
-  });
+        if (status === "online") { dot.className = "status-online"; statusText.textContent = "Online"; }
+        else if (status === "idle") { dot.className = "status-idle"; statusText.textContent = "Idle"; }
+        else if (status === "dnd") { dot.className = "status-dnd"; statusText.textContent = "Do Not Disturb"; }
+        else { dot.className = "status-offline"; statusText.textContent = "Offline"; }
 
-  lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-  });
+        const activityBox = document.getElementById("discord-activity");
+        const dbd = activities.find(a => a.name && a.name.toLowerCase() === "dead by daylight");
 
-  const searchInput = document.getElementById('search-input');
-  const searchResults = document.getElementById('search-results');
-
-  const nameMap = {
-    "Nea Karlsson": "Nea Karlsson",
-    "Sable Ward": "Sable Ward",
-    "Pyramid Head": "Pyramid Head",
-    "Xenomorph": "Xenomorph",
-    "The Legion": "The Legion",
-    "Mikaela Reid": "Mikaela Reid"
-  };
-
-  const imgMap = {};
-  document.querySelectorAll('.screenshot img').forEach(img => {
-    imgMap[img.alt.toLowerCase()] = img;
-  });
-
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-    searchResults.innerHTML = '';
-    if(query.length === 0) { searchResults.style.display='none'; return;}
-    Object.keys(imgMap).forEach(key => {
-      if(key.includes(query)){
-        const li = document.createElement('li');
-        li.textContent = key;
-        li.addEventListener('click', () => imgMap[key].click());
-        searchResults.appendChild(li);
-      }
-    });
-    searchResults.style.display = searchResults.children.length ? 'block' : 'none';
-  });
-
- // Discord status update
-function updateDiscordStatus() {
-  fetch("https://api.lanyard.rest/v1/users/929521121475313804")
-    .then(res => res.json())
-    .then(data => {
-      if (!data.success) return;
-
-      const dot = document.getElementById("discord-status-dot");
-      const statusText = document.getElementById("discord-status-text");
-      const status = data.data.discord_status;
-      const activities = data.data.activities;
-
-      // Set status dot & text
-      if (status === "online") {
-        dot.className = "status-online";
-        statusText.textContent = "Online";
-      } else if (status === "idle") {
-        dot.className = "status-idle";
-        statusText.textContent = "Idle";
-      } else if (status === "dnd") {
-        dot.className = "status-dnd";
-        statusText.textContent = "Do Not Disturb";
-      } else {
+        if (dbd) {
+          document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
+          document.getElementById("dbd-title").textContent = "Playing Dead by Daylight";
+          const startTime = dbd.timestamps?.start;
+          if (startTime) {
+            const updateTimer = () => {
+              const elapsed = Date.now() - startTime;
+              const hours = Math.floor(elapsed / 3600000);
+              const minutes = Math.floor((elapsed % 3600000) / 60000);
+              const seconds = Math.floor((elapsed % 60000) / 1000);
+              document.getElementById("dbd-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
+            };
+            updateTimer();
+            setInterval(updateTimer, 1000);
+          } else { document.getElementById("dbd-timer").textContent = ""; }
+          activityBox.style.display = 'flex';
+        } else {
+          document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
+          document.getElementById("dbd-title").textContent = "Not playing Dead by Daylight Right now";
+          document.getElementById("dbd-timer").textContent = "";
+          activityBox.style.display = 'flex';
+        }
+      })
+      .catch(() => {
+        const dot = document.getElementById("discord-status-dot");
+        const statusText = document.getElementById("discord-status-text");
+        const activityBox = document.getElementById("discord-activity");
         dot.className = "status-offline";
         statusText.textContent = "Offline";
-      }
+        activityBox.style.display = 'none';
+      });
+  }
+  updateDiscordStatus();
+  setInterval(updateDiscordStatus, 15000);
 
-      const activityBox = document.getElementById("discord-activity");
-      const dbd = activities.find(a => a.name && a.name.toLowerCase() === "dead by daylight");
+  // ===== Featured Images =====
+  const monthNames = [
+    "january","february","march","april","may","june",
+    "july","august","september","october","november","december"
+  ];
+  const now = new Date();
+  const currentMonth = monthNames[now.getMonth()];
 
-      if (dbd) {
-        document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
-        document.getElementById("dbd-title").textContent = "Playing Dead by Daylight";
+  const title = document.getElementById('featured-title');
+  title.textContent = `FEATURED Character for the month ${currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1)}`;
 
-        const startTime = dbd.timestamps?.start;
-        if (startTime) {
-          const updateTimer = () => {
-            const elapsed = Date.now() - startTime;
-            const hours = Math.floor(elapsed / 3600000);
-            const minutes = Math.floor((elapsed % 3600000) / 60000);
-            const seconds = Math.floor((elapsed % 60000) / 1000);
-            document.getElementById("dbd-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
-          };
-          updateTimer();
-          setInterval(updateTimer, 1000);
-        } else {
-          document.getElementById("dbd-timer").textContent = "";
-        }
+  const gallery = document.getElementById('featured-gallery');
 
-        activityBox.style.display = 'flex';
-      } else {
-        // DBD not active
-        document.getElementById("dbd-image").src = "https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png";
-        document.getElementById("dbd-title").textContent = "Not playing Dead by Daylight Right now";
-        document.getElementById("dbd-timer").textContent = "";
-        activityBox.style.display = 'flex';
-      }
-    })
-    .catch(() => {
-      const dot = document.getElementById("discord-status-dot");
-      const statusText = document.getElementById("discord-status-text");
-      const activityBox = document.getElementById("discord-activity");
+  // Replace these with actual images for each month; leave empty array if none
+  let images = ["img1.png","img2.png"]; 
 
-      dot.className = "status-offline";
-      statusText.textContent = "Offline";
-      activityBox.style.display = 'none';
-    });
-}
+  let folder = currentMonth;
+  if (images.length === 0) {
+    images = ["No feature this month.jpg"];
+    folder = "Nope";
+  }
 
-updateDiscordStatus();
-setInterval(updateDiscordStatus, 15000);
+  images.forEach(name => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'screenshot';
+
+    const img = document.createElement('img');
+    img.src = `assets/Featured/${folder}/${name}`;
+    img.alt = folder === "Nope" ? "No featured image this month" : `${currentMonth} featured image`;
+    img.title = folder === "Nope" ? "No featured character this month" : "Next character(s) P100";
+    img.style.maxWidth = '800px';
+    img.style.margin = '10px';
+
+    wrapper.appendChild(img);
+    gallery.appendChild(wrapper);
+  });
+
+// ===== console message =====
+console.clear();
 console.log(`⠀⠀⠀⠀⠀⢀⠤⠐⠒⠀⠀⠀⠒⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⡠⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⡔⠁⠀⠀⠀⠀⠀⢰⠁⠀⠀⠀⠀⠀⠀⠈⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -302,12 +226,13 @@ console.log(`⠀⠀⠀⠀⠀⢀⠤⠐⠒⠀⠀⠀⠒⠒⠤⣀⠀⠀⠀⠀⠀⠀�
 ⠀⠀⢧⠀⠈⠛⠿⣟⢻⠀⠀⣿⣿⠁⠀⣾⣿⣧⠀⠘⣿⠀⠀⣾⣿⠀⠀⣿⠀⠀⠋⠀⢰⣿⣿⡀⠀⠛⠻⣟⠀
 ⠀⠀⡞⠿⠶⠄⠀⢸⢸⠀⠀⠿⢿⡄⠀⠻⠿⠇⠀⣸⣿⠀⠀⣿⣿⠀⠀⣿⠀⠀⣶⡀⠈⢻⣿⠿⠶⠆⠀⢸⡇
 ⠀⠀⠧⢤⣤⣤⠴⠋⠈⠦⣤⣤⠼⠙⠦⢤⣤⡤⠶⠋⠹⠤⠤⠿⠿⠤⠤⠿⠤⠤⠿⠳⠤⠤⠽⢤⣤⣤⠴⠟`);
-console.log("Website loaded, Discord status updated. Everything should be working as expected.");
-console.log("Current p100's = 4");
-console.log("Current in-progress = 5");
-console.warn("All buttons, and other assets are loaded and tested on a 1920x1080 resolution.");
-console.warn("The discord API used here might reflect outdated information. (Such as: Relative offset of Online status with +/- 2 min)");
-console.error("If you believe the website displays incorrect information, please report it. (you can add me on steam for such reports!)");
+console.log("Website loaded, Discord status updated. Everything should be working as expected."); 
+console.log("Current p100's = 4"); 
+console.log("Current in-progress = 5"); 
+console.warn("All buttons, and other assets are loaded and tested on a 1920x1080 resolution."); 
+console.warn("The discord API used here might reflect outdated information. (Such as: Relative offset of Online status with +/- 2 min)"); 
+console.error("If you believe the website displays incorrect information, please report it. (you can add me on steam for such reports!)"); 
+console.log("Thank you for visiting my P100 showcase! - Rensora");
 </script>
 </body>
 </html>
