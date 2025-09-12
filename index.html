@@ -65,7 +65,7 @@
 </div>
 
 <div class="search-container">
-  <input type="text" id="search-input" placeholder="Search P100..." />
+  <input type="text" id="search-input" placeholder="Search for a P100..." />
   <ul id="search-results"></ul>
 </div>
 
@@ -73,20 +73,19 @@
   <!-- <h2>completed P100's</h2> future ref -->
   <div class="gallery">
     <div class="screenshot">
-      <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="P100 Nea" title="Unlocked on 27 Mar 2025" />
+      <img src="assets/p100-screenshots/Survivor/Nea.jpg" alt="Nea Karlsson" title="Unlocked on 27 Mar 2025" />
     </div>
     <div class="screenshot">
-      <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="P100 Sable" title="Unlocked on 22 Jul 2025" />
+      <img src="assets/p100-screenshots/Survivor/Sable.jpg" alt="Sable Ward" title="Unlocked on 22 Jul 2025" />
     </div>
       <div class="screenshot">
-      <img src="assets/p100-screenshots/Survivor/Mika.jpg" alt="P100 Mikaela" title="Unlocked on 6 Sep 2025" />
+      <img src="assets/p100-screenshots/Survivor/Mika.jpg" alt="Mikaela Reid" title="Unlocked on 6 Sep 2025" />
     </div>
      <div class="screenshot">
-      <img src="assets/p100-screenshots/Killer/P100 Legion.jpg" alt="P100 Legion" title="Unlocked on 08/18/2025" />
+      <img src="assets/p100-screenshots/Killer/P100 Legion.jpg" alt="The Legion" title="Unlocked on 08/18/2025" />
     </div>
   </div>
 
-  <h2>In-Progress</h2>
   <h4>FEATURED Character for the month September: Pyramid Head - Xenomorph</h4>
   <div class="gallery">
     <div class="screenshot">
@@ -130,12 +129,12 @@
   const lightboxCost = document.getElementById('lightbox-cost');
 
   const infoMap = {
-    'P100 Nea': 
+    'Nea Karlsson': 
     { title: 'Nea Karlsson',
     desc: 'Unlocked on 27 Mar 2025 • My first P100',
     cost: '~ 119 Million Bloodpoints'
    },
-    'P100 Sable': 
+    'Sable Ward': 
     { title: 'Sable Ward',
     desc: 'Unlocked on 22 Jul 2025 • My second P100 Survivor', 
     cost: '~ 121 Million Bloodpoints' 
@@ -152,13 +151,13 @@
     extra: 'Xenomorph is P4 As of last edit...',
     cost: 'Not yet completed'
   },
-    'P100 Legion': 
+    'The Legion': 
     { title: 'The Legion',
     desc: 'Unlocked on 08/18/2025',
     cost: 'Aprox 125 Million Bloodpoints'
   },
-   'P100 Mikaela': 
-    { title: 'P100 Mikaela',
+   'Mikaela Reid': 
+    { title: 'Mikaela Reid',
     desc: 'Unlocked on 6 Sep 2025',
     cost: 'Aprox 130 Million Bloodpoints'
   }
@@ -185,12 +184,12 @@
   const searchResults = document.getElementById('search-results');
 
   const nameMap = {
-    "Nea Karlsson": "P100 Nea",
-    "Sable Ward": "P100 Sable",
+    "Nea Karlsson": "Nea Karlsson",
+    "Sable Ward": "Sable Ward",
     "Pyramid Head": "Pyramid Head",
     "Xenomorph": "Xenomorph",
-    "The Legion": "P100 Legion",
-    "Mikaela Reid": "P100 Mikaela"
+    "The Legion": "The Legion",
+    "Mikaela Reid": "Mikaela Reid"
   };
 
   const imgMap = {};
