@@ -181,9 +181,7 @@
 
   const gallery = document.getElementById('featured-gallery');
 
-  // Replace these with actual images for each month; leave empty array if none
   let images = ["img1.png","img2.png"]; 
-
   let folder = currentMonth;
   if (images.length === 0) {
     images = ["No feature this month.jpg"];
@@ -193,14 +191,12 @@
   images.forEach(name => {
     const wrapper = document.createElement('div');
     wrapper.className = 'screenshot';
-
     const img = document.createElement('img');
     img.src = `assets/Featured/${folder}/${name}`;
     img.alt = folder === "Nope" ? "No featured image this month" : `${currentMonth} featured image`;
     img.title = folder === "Nope" ? "No featured character this month" : "Next character(s) P100";
     img.style.maxWidth = '800px';
     img.style.margin = '10px';
-
     wrapper.appendChild(img);
     gallery.appendChild(wrapper);
   });
@@ -233,6 +229,104 @@ console.warn("All buttons, and other assets are loaded and tested on a 1920x1080
 console.warn("The discord API used here might reflect outdated information. (Such as: Relative offset of Online status with +/- 2 min)"); 
 console.error("If you believe the website displays incorrect information, please report it. (you can add me on steam for such reports!)"); 
 console.log("Thank you for visiting my P100 showcase! - Rensora");
+</script>
+
+<!-- ===== CONTACT SYSTEM ===== -->
+<button id="contact-btn" class="contact-button" aria-label="Contact">Contact</button>
+
+<div id="contact-overlay" class="contact-overlay" aria-hidden="true">
+  <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact Me</h2>
+    <form id="contact-form">
+      <label for="category">Select Category *</label>
+      <select id="category" required>
+        <option value="">--Choose an option--</option>
+        <option value="contact">Contact</option>
+        <option value="complaints">Complaints</option>
+        <option value="suggestions">Suggestions</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="discordName">Your Discord *</label>
+      <input type="text" id="discordName" placeholder="Rensora._.#0000" required>
+
+      <label for="message">Message *</label>
+      <textarea id="message" rows="5" placeholder="Type your message here..." required></textarea>
+
+      <div class="contact-actions">
+        <button type="submit" class="submit-btn">Send</button>
+        <button type="button" id="close-contact" class="close-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  const contactBtn = document.getElementById("contact-btn");
+  const overlay = document.getElementById("contact-overlay");
+  const closeBtn = document.getElementById("close-contact");
+  const form = document.getElementById("contact-form");
+
+  const webhooks = {
+    contact: "https://discord.com/api/webhooks/1416488194798780447/uE4sruQIq5HMZhekdR8am6EM9kVMzYgcfvou3D4Vh_VSGyOtvY9nW66fQlyIl3D5UG2p",
+    complaints: "https://discord.com/api/webhooks/1416487804522729662/ZLve8uUP86iZYOeUCAJmQNl99UmAfTSWb7vYS_ps4KSuPPb0X8JlIWyMHUTUNyP_E-aK",
+    suggestions: "https://discord.com/api/webhooks/1416488346473205911/826_Mj_bfxJPOfkSSa62LzQCugBU2kJ0IW4DMhsxzvoUXPfQDjrv7t6mCwAQtP8wggOj",
+    other: "https://discord.com/api/webhooks/1416488577906376775/HiCstAaTAJb9T0V8Nc5EK-UvaNuwnwzjq2hUctL6gNjbhFBQqp-__IMGoSo9GBK8_2mt"
+  };
+
+  function openOverlay() {
+    overlay.style.display = "flex";
+    overlay.setAttribute("aria-hidden", "false");
+    document.getElementById("category").focus();
+  }
+
+  function closeOverlay() {
+    overlay.style.display = "none";
+    overlay.setAttribute("aria-hidden", "true");
+    form.reset();
+  }
+
+  contactBtn.addEventListener("click", openOverlay);
+  closeBtn.addEventListener("click", closeOverlay);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const category = document.getElementById("category").value;
+    const discordName = document.getElementById("discordName").value;
+    const message = document.getElementById("message").value;
+
+    if (!category || !discordName || !message) return;
+
+    const webhookUrl = webhooks[category] || webhooks.contact;
+
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: "<@929521121475313804>", // ping
+        embeds: [
+          {
+            title: `New ${category.charAt(0).toUpperCase() + category.slice(1)} message`,
+            color: 0x9D00FF,
+            fields: [
+              { name: "Discord", value: discordName },
+              { name: "Message", value: message }
+            ],
+            timestamp: new Date()
+          }
+        ]
+      })
+    });
+
+    closeOverlay();
+    alert("Message sent! You should get pinged shortly.");
+  });
+})();
 </script>
 </body>
 </html>
