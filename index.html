@@ -410,25 +410,34 @@ console.error("If you believe the website displays incorrect information, please
 
     const webhookUrl = webhooks[category] || webhooks.contact;
 
-    await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: "<@929521121475313804>", // ping
-        embeds: [
-          {
-            title: `New ${category.charAt(0).toUpperCase() + category.slice(1)} message`,
-            color: parseInt("4B0082", 16),
-            fields: [
-              { name: "Discord", value: discordName },
-              { name: "Message", value: message }
-            ],
-            timestamp: new Date()
-          }
-        ]
-      })
-    });
+const titles = {
+  contact: "Someone is trying to get in contact",
+  complaints: "A new complaint was opened",
+  suggestions: "Someone has a new suggestion",
+  other: "A new message was opened"
+};
 
+await fetch(webhookUrl, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    content: "<@929521121475313804>", // ping
+    embeds: [
+      {
+        title: titles[category] || "Website fetched a new message",
+        color: parseInt("4B0082", 16),
+        fields: [
+          { name: "Name", value: `\`\`\`\n${discordName}\n\`\`\``, inline: true },
+          { name: "Category", value: `\`\`\`\n${category}\n\`\`\``, inline: true },
+          { name: "Message", value: `\`\`\`\n${message}\n\`\`\`` }
+        ],
+        footer: {
+          text: `Message was received today at ${new Date().toLocaleTimeString()}`
+        }
+      }
+    ]
+  })
+});
     closeOverlay();
     showAlert("Your message has been sent!<br>Rensora will respond to you shortly.<br>Join his server or await a friend request.<br><a href='https://discord.gg/2VMYujXzRh' target='_blank'>Join Contact Server</a>");
   });
