@@ -8,7 +8,7 @@
   <meta name="title" content="Rensora's P100 Showcase" />
   <meta name="description" content="All of Rensora’s P100s, showcased in one place." />
   <meta name="author" content="Rensora" />
-  <meta name="theme-color" content="#b00020" />
+  <meta name="theme-color" content="#ff2f8a" />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph (Discord, Facebook, etc.) -->
@@ -26,47 +26,64 @@
 
   <title>P100 Showcase</title>
   <link rel="icon" href="https://p100library.com/favicon.ico" />
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Fonts: Space Grotesk for display, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles_new.css" />
 </head>
 
 <body>
-<header>
-  <img src="assets/Banner.png" alt="Banner" class="banner" />
-  <h1>P100 Showcase</h1>
 
-  <a href="https://steamcommunity.com/id/rensora/" target="_blank" class="steam-button">
-    <img src="https://cdn-icons-png.flaticon.com/512/3670/3670382.png" alt="My Steam Page" class="steam-icon" />
-    My Steam Page
-  </a>
-
-  <div class="p100-counter">
-    Total P100s: <span id="p100-count">6</span>
+<header class="hero">
+  <div class="hero-inner">
+    <img src="assets/Banner.png" alt="Banner" class="banner" />
+    <div class="hero-text">
+      <h1>P100 Showcase</h1>
+      <p>All of Rensora’s P100s, showcased in one place.</p>
+    </div>
   </div>
-
-  <div class="inprogress-counter">
-    In progress: <span id="inprogress-count">2</span>
-  </div>
-  <p>All of Rensora’s P100s, showcased in one place.</p>
 </header>
 
-<!-- Discord button with dot and status text -->
-<div id="discord-button" class="discord-button">
-  <span id="discord-status-dot"></span>
-  <span id="discord-status-text"></span>
-</div>
+<div class="control-bar">
+  <div class="control-bar-inner">
+    <a href="https://steamcommunity.com/id/rensora/" target="_blank" class="pill-btn steam-button">
+      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670382.png" alt="My Steam Page" class="steam-icon" />
+      My Steam Page
+    </a>
 
-<!-- Discord activity box (glassy, DBD info) -->
-<div id="discord-activity" class="discord-activity">
-  <img id="dbd-image" src="https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png" alt="Game Art">
-  <div class="dbd-info">
-    <span id="dbd-title">Playing Dead by Daylight</span>
-    <span id="dbd-timer"></span>
+    <!-- Discord button with dot and status text -->
+    <div id="discord-button" class="pill-btn discord-button">
+      <span id="discord-status-dot"></span>
+      <span id="discord-status-text"></span>
+    </div>
+
+    <div class="stat-pill">
+      <span class="stat-label">P100s</span>
+      <span id="p100-count" class="stat-value">6</span>
+    </div>
+
+    <div class="stat-pill">
+      <span class="stat-label">In progress</span>
+      <span id="inprogress-count" class="stat-value">2</span>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search For a P100..." />
+      <ul id="search-results"></ul>
+    </div>
   </div>
-</div>
 
-<div class="search-container">
-  <input type="text" id="search-input" placeholder="Search For a P100..." />
-  <ul id="search-results"></ul>
+  <!-- Discord activity box (glassy, DBD info) -->
+  <div id="discord-activity" class="discord-activity">
+    <img id="dbd-image" src="https://cdn2.steamgriddb.com/icon/29ec8066dea8748449b852688c46ee5a/32/256x256.png" alt="Game Art">
+    <div class="dbd-info">
+      <span id="dbd-title">Playing Dead by Daylight</span>
+      <span id="dbd-timer"></span>
+    </div>
+  </div>
 </div>
 
 <main class="gallery-section">
@@ -90,18 +107,10 @@
       <img src="assets/p100-screenshots/Killer/P100_BlightV2.jpg" alt="Blight" title="Unlocked on 29 October 2025" />
     </div>
     </div>
-
-  <h4 id="featured-title"></h4>
-  <div class="gallery" id="featured-gallery"></div>
 </main>
 
 <footer>
-  <p>Made with ❤️ by Rensora • Last updated: 10/29/2025</p>
-
-  <div class="subsite-link">
-      <a href="https://rensoraa.github.io/Prestige-Goals/" class="footer-link">🎯 View Character P100 Goals</a>
-    </p>
-  </div>
+  <p>Made with ❤️ by Rensora • Last updated: 7/13/2026</p>
 </footer>
 
 <div class="lightbox" id="lightbox">
@@ -293,39 +302,6 @@ function updateDiscordStatus() {
 updateDiscordStatus();
 setInterval(updateDiscordStatus, 15000);
 
-// ===== Featured Images =====
-  const monthNames = [
-    "january","february","march","april","may","june",
-    "july","august","september","october","november","december"
-  ];
-  const now = new Date();
-  const currentMonth = monthNames[now.getMonth()];
-
-  const title = document.getElementById('featured-title');
-  title.textContent = `FEATURED Character's for the month ${currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1)}`;
-
-  const gallery = document.getElementById('featured-gallery');
-
-  let images = ["img1.png","img2.png"]; 
-  let folder = currentMonth;
-  if (images.length === 0) {
-    images = ["No feature this month.jpg"];
-    folder = "Nope";
-  }
-
-  images.forEach(name => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'screenshot';
-    const img = document.createElement('img');
-    img.src = `assets/Featured/${folder}/${name}`;
-    img.alt = folder === "Nope" ? "No featured image this month" : `${currentMonth} featured image`;
-    img.title = folder === "Nope" ? "No featured character this month" : "Next character(s) P100";
-    img.style.maxWidth = '900px';
-    img.style.margin = '10px';
-    wrapper.appendChild(img);
-    gallery.appendChild(wrapper);
-  });
-
 console.log(`⠀⠀⠀⠀⠀⢀⠤⠐⠒⠀⠀⠀⠒⠒⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⡠⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⡔⠁⠀⠀⠀⠀⠀⢰⠁⠀⠀⠀⠀⠀⠀⠈⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -440,7 +416,7 @@ await fetch(webhookUrl, {
     embeds: [
       {
         title: titles[category] || "Website fetched a new message",
-        color: parseInt("4B0082", 16),
+        color: parseInt("FF2F8A", 16),
         fields: [
           { name: "Name", value: `\`\`\`\n${discordName}\n\`\`\``, inline: true },
           { name: "Category", value: `\`\`\`\n${category}\n\`\`\``, inline: true },
